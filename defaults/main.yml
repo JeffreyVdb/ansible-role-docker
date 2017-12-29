@@ -4,6 +4,10 @@ docker_edition: 'ce'
 docker_package: "docker-{{ docker_edition }}"
 docker_package_state: present
 
+# Users in the docker group are privileged to run docker
+docker_group: docker
+docker_users: []
+
 # Docker Compose options.
 docker_install_compose: true
 docker_compose_version: "1.16.1"

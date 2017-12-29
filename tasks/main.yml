@@ -8,6 +8,19 @@
 - name: Install Docker.
   package: name={{ docker_package }} state={{ docker_package_state }}
 
+- name: Make sure that the {{ docker_group }} exists
+  group:
+    name: "{{ docker_group }}"
+    state: present
+
+- name: Add users that are privileged to run docker
+  user:
+    name: "{{ item }}"
+    groups: "{{ docker_group }}"
+    append: yes
+  with_items: "{{ docker_users }}"
+  when: docker_users is defined
+
 - name: Ensure Docker is started and enabled at boot.
   service:
     name: docker
